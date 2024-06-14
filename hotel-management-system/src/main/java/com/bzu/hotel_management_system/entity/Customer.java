@@ -16,5 +16,6 @@ public class Customer extends User {
 
 
     private Long customerId;
-    // todo add reservation
+    @OneToMany(mappedBy = "customer")
+    private List<Reservation> reservations;
 }
