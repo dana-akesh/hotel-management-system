@@ -17,6 +17,10 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reservationId;
 
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
+
     private String date;
     private String status;
 }
