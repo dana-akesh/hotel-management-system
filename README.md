@@ -1,7 +1,7 @@
-# 🏨 Hotel Management System 🏨
+# Hotel Management System 
 #### Contributers:  <a href="https://github.com/dana-akesh"> Dana Akesh - 1201112 </a> &  <a href="https://github.com/BakerDwaikat"> Baker Al-Sdeeq Dwaikat - 1192772 </a>
 
-## 🔖 Table Of Contents:
+## Table Of Contents:
 - [Description](#description)
 - [Core Resources](#core-resources)
 - [ER Diagram](#er-diagram)
