@@ -17,7 +17,23 @@ The Hotel Management System API provides endpoints for managing hotel-related op
 
 
 ## Core Resources:
-
+<ol>
+  <li>
+    <b>User: </b> 
+  </li>
+  <li>
+    <b>Customer:</b>
+  </li>
+  <li>
+    <b>Employee: </b>
+  </li>
+  <li>
+    <b>Reservation: </b>
+  </li>
+<li>
+    <b>Task: </b>
+  </li>
+</ol>
 
 ## ER Diagram:
 
