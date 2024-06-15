@@ -21,6 +21,6 @@ public class Facility {
 
     // additional facility fields
 
-    /*@OneToMany(mappedBy = "facility")
-    private List<Room> rooms;*/
+    @OneToMany(mappedBy = "facility")
+    private List<Room> rooms;
 }
