@@ -16,6 +16,6 @@ import java.util.List;
 public class Employee extends User {
 
     private Long employeeId;
-    //@OneToMany(mappedBy = "employee")
-    //private List<Task> tasks;
+    @OneToMany(mappedBy = "employee")
+    private List<Task> tasks;
 }
