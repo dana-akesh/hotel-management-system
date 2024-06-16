@@ -18,6 +18,13 @@ public class TaskServiceImplementation implements TaskService {
     }
 
     @Override
+    public List<TaskDTO> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+
+        return tasks.stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public TaskDTO addTask(TaskDTO taskDTO) {
         Task task = mapToEntity(taskDTO);
         Task newTask = taskRepository.save(task);
