@@ -29,7 +29,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(UserDTO userDTO) {
+    public UserDTO updateUser(UserDTO userDTO, Long id) {
         // check if the user exists
         User user = userRepository.findById(userDTO.getUserId()).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", userDTO.getUserId()));
