@@ -2,6 +2,7 @@ package com.bzu.hotel_management_system.service.imp;
 
 import com.bzu.hotel_management_system.DTO.EmployeeDTO;
 import com.bzu.hotel_management_system.entity.Employee;
+import com.bzu.hotel_management_system.entity.Role;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.EmployeeRepository;
 import com.bzu.hotel_management_system.service.EmployeeService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EmployeeServiceImplementation implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
@@ -67,7 +69,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
         //employeeDTO.setEmployeeId(employee.getEmployeeId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setPassword(employee.getPassword());
-        employeeDTO.setRole(employee.getRole());
+        employeeDTO.setRole(String.valueOf(employee.getRole()));
         employeeDTO.setUsername(employee.getUsername());
         employeeDTO.setTasks(employee.getTasks());
 
@@ -82,7 +84,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
         employee.setName(employeeDTO.getName());
         employee.setTasks(employeeDTO.getTasks());
         employee.setPassword(employeeDTO.getPassword());
-        employee.setRole(employeeDTO.getRole());
+        employee.setRole(Role.valueOf(employeeDTO.getRole()));
         employee.setUsername(employeeDTO.getUsername());
 
         return employee;

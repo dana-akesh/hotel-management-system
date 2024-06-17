@@ -1,13 +1,14 @@
 package com.bzu.hotel_management_system.service.imp;
 
 import com.bzu.hotel_management_system.DTO.UserDTO;
+import com.bzu.hotel_management_system.entity.Role;
 import com.bzu.hotel_management_system.entity.User;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.UserRepository;
 import com.bzu.hotel_management_system.service.UserService;
 import org.springframework.stereotype.Service;
 
-
+@Service
 public class UserServiceImplementation implements UserService {
     private UserRepository userRepository;
 
@@ -36,7 +37,7 @@ public class UserServiceImplementation implements UserService {
 
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
-        user.setRole(userDTO.getRole());
+        user.setRole(Role.valueOf(userDTO.getRole()));
         User updatedUser = userRepository.save(user);
 
         return mapToDTO(updatedUser);
@@ -64,7 +65,7 @@ public class UserServiceImplementation implements UserService {
         userDTO.setUserId(user.getUserId());
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
-        userDTO.setRole(user.getRole());
+        userDTO.setRole(String.valueOf(user.getRole()));
 
         return userDTO;
     }
@@ -75,7 +76,7 @@ public class UserServiceImplementation implements UserService {
         user.setUserId(userDTO.getUserId());
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
-        user.setRole(userDTO.getRole());
+        user.setRole(Role.valueOf(userDTO.getRole()));
 
         return user;
     }
