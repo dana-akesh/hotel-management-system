@@ -30,7 +30,7 @@ public class ReservationServiceImplementation implements ReservationService {
                 () -> new ResourceNotFoundException("Reservation", "id", reservationDTO.getReservationId()));
 
         reservation.setCustomer(reservationDTO.getCustomer());
-        reservation.setReservationRooms(reservationDTO.getReservationRooms());
+        //todo reservation.setReservationRooms(reservationDTO.getReservationRooms());
         reservation.setReservationId(reservationDTO.getReservationId());
         reservation.setDate(reservationDTO.getDate());
         reservation.setStatus(reservationDTO.getStatus());
@@ -103,7 +103,7 @@ public class ReservationServiceImplementation implements ReservationService {
 
         reservationDTO.setReservationId(reservation.getReservationId());
         reservationDTO.setCustomer(reservation.getCustomer());
-        reservationDTO.setReservationRooms(reservation.getReservationRooms());
+        //todo reservationDTO.setReservationRooms(reservation.getReservationRooms());
         reservationDTO.setDate(reservation.getDate());
         reservationDTO.setStatus(reservation.getStatus());
 
@@ -115,7 +115,7 @@ public class ReservationServiceImplementation implements ReservationService {
 
         reservation.setReservationId(reservationDTO.getReservationId());
         reservation.setCustomer(reservationDTO.getCustomer());
-        reservation.setReservationRooms(reservationDTO.getReservationRooms());
+        //todo reservation.setReservationRooms(reservationDTO.getReservationRooms());
         reservation.setDate(reservationDTO.getDate());
         reservation.setStatus(reservationDTO.getStatus());
 
