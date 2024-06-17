@@ -6,11 +6,22 @@ import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.RoomRepository;
 import com.bzu.hotel_management_system.service.RoomService;
 
+import java.util.List;
+
 public class RoomServiceImplementation implements RoomService {
     private RoomRepository roomRepository;
 
     public RoomServiceImplementation(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
+    }
+
+    @Override
+    public List<RoomDTO> getAllRooms() {
+        List<Room> rooms = roomRepository.findAll();
+        if (!rooms.isEmpty()) {
+            return rooms.stream().map(this::mapToDTO).toList();
+        }
+        return List.of();
     }
 
     @Override
