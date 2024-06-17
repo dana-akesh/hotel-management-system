@@ -7,11 +7,19 @@ import com.bzu.hotel_management_system.repository.EmployeeRepository;
 import com.bzu.hotel_management_system.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 public class EmployeeServiceImplementation implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public EmployeeServiceImplementation(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream().map(this::mapToDTO).toList();
     }
 
     @Override
