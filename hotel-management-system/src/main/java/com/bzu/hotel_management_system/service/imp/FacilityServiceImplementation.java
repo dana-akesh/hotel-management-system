@@ -6,12 +6,20 @@ import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.FacilityRepository;
 import com.bzu.hotel_management_system.service.FacilityService;
 
+import java.util.List;
+
 
 public class FacilityServiceImplementation implements FacilityService {
     private FacilityRepository facilityRepository;
 
     public FacilityServiceImplementation(FacilityRepository facilityRepository) {
         this.facilityRepository = facilityRepository;
+    }
+
+    @Override
+    public List<FacilityDTO> getAllFacilities() {
+        List<Facility> facilities = facilityRepository.findAll();
+        return facilities.stream().map(this::mapToDTO).toList();
     }
 
     @Override
