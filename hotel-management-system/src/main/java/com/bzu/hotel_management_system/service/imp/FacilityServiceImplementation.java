@@ -5,10 +5,11 @@ import com.bzu.hotel_management_system.entity.Facility;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.FacilityRepository;
 import com.bzu.hotel_management_system.service.FacilityService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class FacilityServiceImplementation implements FacilityService {
     private FacilityRepository facilityRepository;
 

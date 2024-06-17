@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationRoomDTO {
-    private Long id;
+    private Long reservationRoomId;
     private Long reservationId;
     private Long roomId;
 }

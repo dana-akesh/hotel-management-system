@@ -5,7 +5,9 @@ import com.bzu.hotel_management_system.entity.Reservation;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.ReservationRepository;
 import com.bzu.hotel_management_system.service.ReservationService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReservationServiceImplementation implements ReservationService {
     private ReservationRepository reservationRepository;
 
@@ -31,6 +33,7 @@ public class ReservationServiceImplementation implements ReservationService {
 
         reservation.setCustomer(reservationDTO.getCustomer());
         //todo reservation.setReservationRooms(reservationDTO.getReservationRooms());
+        reservation.setReservationRoom(reservationDTO.getReservationRoom());
         reservation.setReservationId(reservationDTO.getReservationId());
         reservation.setDate(reservationDTO.getDate());
         reservation.setStatus(reservationDTO.getStatus());

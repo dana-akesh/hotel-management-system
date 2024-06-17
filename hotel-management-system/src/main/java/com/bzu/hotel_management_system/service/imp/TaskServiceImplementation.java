@@ -5,11 +5,13 @@ import com.bzu.hotel_management_system.entity.Task;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.TaskRepository;
 import com.bzu.hotel_management_system.service.TaskService;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class TaskServiceImplementation implements TaskService {
     private TaskRepository taskRepository;
 
