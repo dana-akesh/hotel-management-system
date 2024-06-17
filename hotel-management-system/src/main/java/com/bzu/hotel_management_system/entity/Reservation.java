@@ -21,6 +21,9 @@ public class Reservation {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
+    @OneToMany(mappedBy = "reservation")
+    private List<ReservationRoom> reservationRooms;
+
     private String date;
     private String status;
 }
