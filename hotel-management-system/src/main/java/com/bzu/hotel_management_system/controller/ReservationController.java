@@ -253,31 +253,6 @@ public class ReservationController {
         return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
-    // cancelReservation
-    @Operation(
-            description = "cancel reservation",
-            summary = "This is a summary for reservation DELETE endpoint",
-            responses = {
-                    @ApiResponse(
-                            description = "reservation cancelled request is sent",
-                            responseCode = "200"
-                    ),
-                    @ApiResponse(
-                            description = "reservation not found",
-                            responseCode = "404"
-                    ),
-                    @ApiResponse(
-                            description = "Internal server error",
-                            responseCode = "500"
-                    )
-            }
-    )
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
-        log.info("Request to cancel reservation by id: {}", id);
-        reservationService.cancelReservation(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     // approveCancelReservation
     @Operation(

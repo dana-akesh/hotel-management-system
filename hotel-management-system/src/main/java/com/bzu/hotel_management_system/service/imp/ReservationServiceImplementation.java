@@ -92,15 +92,6 @@ public class ReservationServiceImplementation implements ReservationService {
     }
 
     @Override
-    public void cancelReservation(Long id) {
-        Reservation reservation = reservationRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Reservation", "id", id));
-
-        reservation.setStatus("Pending Cancellation");
-        reservationRepository.save(reservation);
-    }
-
-    @Override
     public void approveCancelReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "id", id));
