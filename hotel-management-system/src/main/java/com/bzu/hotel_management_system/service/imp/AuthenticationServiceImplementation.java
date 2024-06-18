@@ -1,10 +1,9 @@
 package com.bzu.hotel_management_system.service.imp;
 
 import com.bzu.hotel_management_system.config.JwtService;
-import com.bzu.hotel_management_system.entity.Role;
-import com.bzu.hotel_management_system.entity.Token;
-import com.bzu.hotel_management_system.entity.TokenType;
-import com.bzu.hotel_management_system.entity.User;
+import com.bzu.hotel_management_system.entity.*;
+import com.bzu.hotel_management_system.repository.CustomerRepository;
+import com.bzu.hotel_management_system.repository.EmployeeRepository;
 import com.bzu.hotel_management_system.repository.TokenRepository;
 import com.bzu.hotel_management_system.repository.UserRepository;
 import com.bzu.hotel_management_system.request.AuthenticationRequest;
@@ -33,15 +32,21 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
 
     private final TokenRepository tokenRepository;
 
+    private final CustomerRepository customerRepository;
+
+    private final EmployeeRepository employeeRepository;
+
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
 
     private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationServiceImplementation(UserRepository userRepository, TokenRepository tokenRepository, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    public AuthenticationServiceImplementation(UserRepository userRepository, TokenRepository tokenRepository, CustomerRepository customerRepository, EmployeeRepository employeeRepository, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
+        this.customerRepository = customerRepository;
+        this.employeeRepository = employeeRepository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -58,7 +63,24 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(registerRequest.getRole())
                 .build();
-        var savedUser = userRepository.save(user);
+        User savedUser = null;
+
+        if (role == Role.CUSTOMER) {
+            Customer customer = new Customer();
+            customer.setUsername(user.getUsername());
+            customer.setName(user.getName());
+            customer.setPassword(user.getPassword());
+            customer.setRole(user.getRole());
+            savedUser = customerRepository.save(customer);
+        } else {
+            User user2 = new User();
+            user2.setUsername(user.getUsername());
+            user2.setName(user.getName());
+            user2.setPassword(user.getPassword());
+            user2.setRole(user.getRole());
+            savedUser = userRepository.save(user2);
+        }
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
@@ -69,7 +91,6 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        logger.debug("authenticate user {} - {}",request.getUsername(), request.getPassword());  // Log the role
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),

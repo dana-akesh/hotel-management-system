@@ -45,6 +45,8 @@ public class CustomerServiceImplementation implements CustomerService {
         return mapToDTO(customer);
     }
 
+    // TODO: Add get customer by name, Date of Birth
+
     @Override
     public CustomerDTO changePassword(String password, Long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(
@@ -75,7 +77,6 @@ public class CustomerServiceImplementation implements CustomerService {
     private CustomerDTO mapToDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
 
-        customerDTO.setCustomerId(customer.getCustomerId());
         customerDTO.setUsername(customer.getUsername());
         customerDTO.setUserId(customer.getUserId());
         customerDTO.setName(customer.getName());
@@ -89,7 +90,6 @@ public class CustomerServiceImplementation implements CustomerService {
         Customer customer = new Customer();
 
 
-        customer.setCustomerId(customerDTO.getCustomerId());
         customer.setName(customerDTO.getName());
         customer.setUsername(customerDTO.getUsername());
         customer.setUserId(customerDTO.getUserId());

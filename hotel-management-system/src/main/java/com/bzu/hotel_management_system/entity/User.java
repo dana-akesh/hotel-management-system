@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-@AllArgsConstructor   //automatically generates a constructor with a parameter for each field in your class
+@AllArgsConstructor   // automatically generates a constructor with a parameter for each field in your class
 @NoArgsConstructor     // generates a constructor with no parameter
 @Entity
 @Builder
