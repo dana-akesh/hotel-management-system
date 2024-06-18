@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationDTO {
-    private long reservationId;
+    private Long reservationId;
     private Customer customer;
     private String date;
     private String status;

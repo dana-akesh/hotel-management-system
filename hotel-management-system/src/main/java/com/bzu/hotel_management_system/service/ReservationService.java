@@ -1,8 +1,13 @@
 package com.bzu.hotel_management_system.service;
 
+import com.bzu.hotel_management_system.DTO.EmployeeDTO;
 import com.bzu.hotel_management_system.DTO.ReservationDTO;
 
+import java.util.List;
+
 public interface ReservationService {
+
+    List<ReservationDTO> getAllReservations();
 
     ReservationDTO addReservation(ReservationDTO reservationDTO);
 

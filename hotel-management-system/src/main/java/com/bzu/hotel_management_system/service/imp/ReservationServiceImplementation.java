@@ -7,6 +7,8 @@ import com.bzu.hotel_management_system.repository.ReservationRepository;
 import com.bzu.hotel_management_system.service.ReservationService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReservationServiceImplementation implements ReservationService {
     private ReservationRepository reservationRepository;
@@ -16,13 +18,19 @@ public class ReservationServiceImplementation implements ReservationService {
     }
 
     @Override
+    public List<ReservationDTO> getAllReservations() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        return reservations.stream().map(this::mapToDTO).toList();
+    }
+
+    @Override
     public ReservationDTO addReservation(ReservationDTO reservationDTO) {
 
-            Reservation reservation = mapToEntity(reservationDTO);
-            Reservation newReservation = reservationRepository.save(reservation);
+        Reservation reservation = mapToEntity(reservationDTO);
+        Reservation newReservation = reservationRepository.save(reservation);
 
-            ReservationDTO reservationResponse = mapToDTO(newReservation);
-            return reservationResponse;
+        ReservationDTO reservationResponse = mapToDTO(newReservation);
+        return reservationResponse;
     }
 
     @Override
@@ -60,7 +68,10 @@ public class ReservationServiceImplementation implements ReservationService {
 
     @Override
     public ReservationDTO getReservationByUserId(Long id) {
-        return null;
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Reservation", "id", id));
+
+        return mapToDTO(reservation);
     }
 
     @Override

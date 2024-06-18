@@ -99,7 +99,7 @@ public class CustomerController {
     // update customer
     @Operation(
             description = "update customer",
-            summary = "This is a summary for customers PUT endpoint",
+            summary = "This is a summary for customers PATCH endpoint",
             responses = {
                     @ApiResponse(
                             description = "customer updated successfully",
@@ -170,7 +170,7 @@ public class CustomerController {
     // change password
     @Operation(
             description = "change password",
-            summary = "This is a summary for customers PUT endpoint",
+            summary = "This is a summary for customers PATCH endpoint",
             responses = {
                     @ApiResponse(
                             description = "password changed successfully",
