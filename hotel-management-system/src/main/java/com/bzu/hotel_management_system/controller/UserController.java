@@ -54,7 +54,7 @@ public class UserController {
 
     )
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
@@ -127,7 +127,7 @@ public class UserController {
             }
     )
 
-    @PatchMapping("/users/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable(name = "id") Long id) {
         // Logic to update the user
         if (userDTO == null || userDTO.getName() == null || userDTO.getUsername() == null ) {

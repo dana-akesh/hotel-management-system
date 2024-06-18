@@ -77,7 +77,7 @@ public class FacilityController {
             }
     )
 
-    @GetMapping("/facilities")
+    @GetMapping
     public ResponseEntity<List<FacilityDTO>> getAllFacilities() {
         log.info("Getting all facilities");
         List<FacilityDTO> facilities = facilityService.getAllFacilities();
@@ -143,7 +143,7 @@ public class FacilityController {
             }
     )
 
-    @PatchMapping("/facilities/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<FacilityDTO> updateFacility(@Valid @RequestBody FacilityDTO facilityDTO, @PathVariable Long id) {
         log.info("Request to update facility by id: {}", id);
         FacilityDTO facility  = facilityService.updateFacility(facilityDTO);
@@ -176,7 +176,7 @@ public class FacilityController {
                     }
             )
 
-    @GetMapping("/facilities/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<FacilityDTO> getFacilityById(Long id) {
         log.info("Request to get facility by id: {}", id);
         FacilityDTO facility = facilityService.getFacilityById(id);
@@ -203,7 +203,7 @@ public class FacilityController {
             }
     )
 
-    @DeleteMapping("/facilities/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         log.info("Request to delete facility by id: {}", id);
         facilityService.deleteFacility(id);

@@ -55,7 +55,7 @@ public class ReservationController {
 
     )
 
-    @GetMapping("/reservations")
+    @GetMapping
     public ResponseEntity<List<ReservationDTO>> getAllFacilities() {
         log.info("Getting all reservations");
         List<ReservationDTO> reservations = reservationService.getAllReservations();
@@ -125,7 +125,7 @@ public class ReservationController {
             }
     )
 
-    @PatchMapping("/reservations/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ReservationDTO> updateReservation(@Valid @RequestBody ReservationDTO reservationDTO, @PathVariable Long id) {
         log.info("Request to update reservation by id: {}", id);
         ReservationDTO reservation = reservationService.updateReservation(reservationDTO);
@@ -156,38 +156,11 @@ public class ReservationController {
             }
     )
 
-    @GetMapping("/reservations/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ReservationDTO> getReservationById(@PathVariable Long id) {
         log.info("Request to get reservation by id: {}", id);
         ReservationDTO reservation = reservationService.getReservationById(id);
         return new ResponseEntity<>(reservation, HttpStatus.OK);
-    }
-
-    // deleteReservation
-    @Operation(
-            description = "delete reservation",
-            summary = "This is a summary for reservation DELETE endpoint",
-            responses = {
-                    @ApiResponse(
-                            description = "reservation deleted successfully",
-                            responseCode = "200"
-                    ),
-                    @ApiResponse(
-                            description = "reservation not found",
-                            responseCode = "404"
-                    ),
-                    @ApiResponse(
-                            description = "Internal server error",
-                            responseCode = "500"
-                    )
-            }
-    )
-
-    @DeleteMapping("/reservations/{id}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
-        log.info("Request to delete reservation by id: {}", id);
-        reservationService.deleteReservation(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // getReservationByUserId
@@ -213,7 +186,7 @@ public class ReservationController {
                     )
             }
     )
-    @GetMapping("/reservations/customers/{id}")
+    @GetMapping("/customers/{id}")
     public ResponseEntity<ReservationDTO> getReservationByUserId(@PathVariable Long id) {
         log.info("Request to get reservation by customer id: {}", id);
         ReservationDTO reservation = reservationService.getReservationByUserId(id);
@@ -243,7 +216,7 @@ public class ReservationController {
                     )
             }
     )
-    @GetMapping("/reservations/customers/{name}")
+    @GetMapping("/customers/{name}")
     public ResponseEntity<ReservationDTO> getReservationByUserName(@PathVariable String name) {
         log.info("Request to get reservation by customer name: {}", name);
         ReservationDTO reservation = reservationService.getReservationByUserName(name);
@@ -286,7 +259,7 @@ public class ReservationController {
             summary = "This is a summary for reservation DELETE endpoint",
             responses = {
                     @ApiResponse(
-                            description = "reservation cancelled successfully",
+                            description = "reservation cancelled request is sent",
                             responseCode = "200"
                     ),
                     @ApiResponse(
@@ -299,11 +272,11 @@ public class ReservationController {
                     )
             }
     )
-    @DeleteMapping("/reservations/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
         log.info("Request to cancel reservation by id: {}", id);
         reservationService.cancelReservation(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // approveCancelReservation
@@ -325,7 +298,7 @@ public class ReservationController {
                     )
             }
     )
-    @PatchMapping("/reservations/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> approveCancelReservation(@PathVariable Long id) {
         log.info("Request to approve cancel reservation by id: {}", id);
         reservationService.approveCancelReservation(id);

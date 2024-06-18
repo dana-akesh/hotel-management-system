@@ -77,7 +77,7 @@ public class RoomController {
             }
     )
 
-    @GetMapping("/rooms")
+    @GetMapping
     public ResponseEntity<List<RoomDTO>> getAllRooms() {
         log.info("Request to get all rooms");
         List<RoomDTO> rooms = roomService.getAllRooms();

@@ -78,7 +78,7 @@ public class TaskController {
             }
     )
 
-    @GetMapping("/tasks")
+    @GetMapping
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
         log.info("Request to get all tasks");
         List<TaskDTO> tasks = taskService.getAllTasks();

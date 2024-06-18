@@ -76,7 +76,7 @@ public class EmployeeController {
                     )
             }
     )
-    @GetMapping("/employees")
+    @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAllFacilities() {
         log.info("Getting all employees");
         List<EmployeeDTO> employees = employeeService.getAllEmployees();
@@ -118,7 +118,7 @@ public class EmployeeController {
     }
 
     //update employee
-    @PatchMapping("/employees/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@Valid @RequestBody EmployeeDTO employeeDTO, @PathVariable Long id) {
         log.info("Request to update employee by id: {}", id);
         EmployeeDTO employee  = employeeService.updateEmployee(employeeDTO);
@@ -151,7 +151,7 @@ public class EmployeeController {
             )
 
 
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(Long id) {
         log.info("Request to get employee by id: {}", id);
         EmployeeDTO employee = employeeService.getEmployeeById(id);
@@ -179,7 +179,7 @@ public class EmployeeController {
     )
 
 
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         log.info("Request to delete employee by id: {}", id);
         employeeService.deleteEmployee(id);

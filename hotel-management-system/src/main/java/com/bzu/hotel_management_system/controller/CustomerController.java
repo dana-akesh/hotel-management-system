@@ -52,7 +52,7 @@ public class CustomerController {
 
     )
 
-    @GetMapping("/users/customers/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
@@ -124,7 +124,7 @@ public class CustomerController {
             }
     )
 
-    @PatchMapping("/users/customers/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<CustomerDTO> updateCustomerById(@PathVariable(name = "id") Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         // logic to update customer
         if (customerDTO == null || customerDTO.getName() == null || customerDTO.getUsername() == null) {
@@ -160,7 +160,7 @@ public class CustomerController {
             }
     )
 
-    @DeleteMapping("/users/customers/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "id") Long id) {
         customerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -195,7 +195,7 @@ public class CustomerController {
             }
     )
 
-    @PatchMapping("/users/customers/{id}/change-password")
+    @PatchMapping("/{id}/change-password")
     public ResponseEntity<CustomerDTO> changePassword(@PathVariable(name = "id") Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         // logic to change password
         if (customerDTO == null || customerDTO.getPassword() == null) {
@@ -236,7 +236,7 @@ public class CustomerController {
 
     )
 
-    @GetMapping("/users/customers/{id}/reservations")
+    @GetMapping("/{id}/reservations")
     public ResponseEntity<CustomerDTO> getCustomerReservations(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerReservations(id));
     }
