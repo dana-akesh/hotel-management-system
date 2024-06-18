@@ -35,8 +35,6 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
 
     private final CustomerRepository customerRepository;
 
-    private final EmployeeRepository employeeRepository;
-
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
@@ -47,7 +45,6 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.customerRepository = customerRepository;
-        this.employeeRepository = employeeRepository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -102,7 +99,6 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                         request.getPassword()
                 )
         );
-        logger.debug("authenticate user 2");  // Log the role
         var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
