@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public class EmployeeController {
 
     //get all employees
     @Operation(
-            summary = "Get all facilities",
-            description = "Get all rooms in the system",
+            summary = "Get all employees",
+            description = "Get all employees in the system",
             responses = {
                     @ApiResponse(
                             description = "Successful operation",
@@ -67,7 +68,7 @@ public class EmployeeController {
                             )
                     ),
                     @ApiResponse(
-                            description = "No facilities found",
+                            description = "No employees found",
                             responseCode = "404",
                             content = @Content(
                                     mediaType = "application/json",
@@ -77,7 +78,7 @@ public class EmployeeController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<EmployeeDTO>> getAllFacilities() {
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
         log.info("Getting all employees");
         List<EmployeeDTO> employees = employeeService.getAllEmployees();
         return new ResponseEntity<>(employees, HttpStatus.OK);

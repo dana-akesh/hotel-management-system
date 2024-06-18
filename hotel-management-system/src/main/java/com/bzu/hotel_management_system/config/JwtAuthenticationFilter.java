@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,16 +24,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
     // Define the white list URLs here or pass them via constructor if needed
     private static final List<String> WHITE_LIST_URL = Arrays.asList(
-            "/api/v1/auth/**",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/swagger-resources/**",
-            "/webjars/**",
+            "/api/v1/auth/",
+            "/swagger-ui/",
+            "/v3/api-docs/",
+            "/swagger-resources/",
+            "/webjars/",
             "/swagger-ui.html"
     );
 
@@ -58,9 +62,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
+        logger.debug("JwtAuthenticationFilter - {}", request.getHeader("Authorization"));
+        logger.debug("JwtAuthenticationFilter - {}", authHeader);
+        logger.debug("JwtAuthenticationFilter - {}", jwt);
         username = jwtService.extractUsername(jwt);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            logger.debug("JwtAuthenticationFilter - {}", userDetails.getAuthorities());
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -78,11 +86,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     // Method to check if the URL is in the white list
     private boolean isWhiteListed(String servletPath) {
-        for (String whiteListedUrl : WHITE_LIST_URL) {
-            if (servletPath.startsWith(whiteListedUrl.replace("**", ""))) {
-                return true;
-            }
-        }
-        return false;
+        return WHITE_LIST_URL.stream().anyMatch(servletPath::startsWith);
     }
 }

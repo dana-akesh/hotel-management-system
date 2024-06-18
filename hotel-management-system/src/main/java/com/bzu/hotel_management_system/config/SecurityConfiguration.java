@@ -1,6 +1,10 @@
 package com.bzu.hotel_management_system.config;
 
+import com.bzu.hotel_management_system.controller.EmployeeController;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -26,14 +30,16 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
+    private final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
+
     private static final String[] WHITE_LIST_URL = {
             "/api/v1/auth/**",
             "/api/v1/auth/authenticate",
-            "/swagger-ui/**",        // Include all Swagger UI resources
+            "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/swagger-resources/**", // Add Swagger resources
-            "/webjars/**",           // Add webjars for Swagger UI
-            "/swagger-ui.html"       // Swagger UI HTML entry point
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/swagger-ui.html"
             };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -41,16 +47,17 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        log.debug("Security Filter Chain - {}", ADMIN.name());
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), CUSTOMER.name())
-                                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), CUSTOMER_READ.name())
-                                .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), CUSTOMER_CREATE.name())
-                                .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), CUSTOMER_UPDATE.name())
-                                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), CUSTOMER_DELETE.name())
+                                .requestMatchers("/api/v1/users/employees/**").hasRole(ADMIN.name())
+                                .requestMatchers(GET, "/api/v1/users/employees/**").hasAuthority(ADMIN_READ.name())
+                                .requestMatchers(POST, "/api/v1/users/employees/**").hasAuthority(ADMIN_CREATE.name())
+                                .requestMatchers(PUT, "/api/v1/users/employees/**").hasAuthority(ADMIN_UPDATE.name())
+                                .requestMatchers(DELETE, "/api/v1/users/employees/**").hasAuthority(ADMIN_DELETE.name())
                                 .anyRequest()
                                 .authenticated()
                 )
