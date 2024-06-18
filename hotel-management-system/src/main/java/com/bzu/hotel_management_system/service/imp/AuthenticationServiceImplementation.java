@@ -2,6 +2,7 @@ package com.bzu.hotel_management_system.service.imp;
 
 import com.bzu.hotel_management_system.config.JwtService;
 import com.bzu.hotel_management_system.entity.*;
+import com.bzu.hotel_management_system.exception.UsernameAlreadyExistsException;
 import com.bzu.hotel_management_system.repository.CustomerRepository;
 import com.bzu.hotel_management_system.repository.EmployeeRepository;
 import com.bzu.hotel_management_system.repository.TokenRepository;
@@ -57,13 +58,17 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
         Role role = registerRequest.getRole();  // Add this line to log the role
         logger.debug("Registering user with role: {}", role);  // Log the role
 
+        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
+            throw new UsernameAlreadyExistsException("Username already exists: " + registerRequest.getUsername());
+        }
+
         var user = User.builder()
                 .username(registerRequest.getUsername())
                 .name(registerRequest.getName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(registerRequest.getRole())
                 .build();
-        User savedUser = null;
+        User savedUser;
 
         if (role == Role.CUSTOMER) {
             Customer customer = new Customer();
