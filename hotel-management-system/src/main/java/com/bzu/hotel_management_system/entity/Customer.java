@@ -14,8 +14,6 @@ import java.util.List;
 @Entity
 public class Customer extends User {
 
-
-    private Long customerId;
     @OneToMany(mappedBy = "customer")
     private List<Reservation> reservations;
 }
