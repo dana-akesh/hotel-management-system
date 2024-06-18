@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users/customers")
-@Tag(name = "Customer Management", description = "Operations related to customer management")
+@Tag(name = "Customer", description = "Operations related to customer management")
 public class CustomerController {
     private final Logger log = LoggerFactory.getLogger(CustomerController.class);
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
-@Tag(name = "Task Management", description = "Operations related to Task management")
+@Tag(name = "Task", description = "Operations related to Task management")
 public class TaskController {
 
     private final Logger log = LoggerFactory.getLogger(TaskController.class);

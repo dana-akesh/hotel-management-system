@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
-@Tag(name = "User Management", description = "Operations related to user management")
+@Tag(name = "User", description = "Operations related to user management")
 public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users/employees")
-@Tag(name = "Employee Management", description = "Operations related to Employee management")
+@Tag(name = "Employee", description = "Operations related to Employee management")
 public class EmployeeController {
     private final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
@@ -118,6 +118,29 @@ public class EmployeeController {
     }
 
     //update employee
+    @Operation(
+            summary = "patch a employee",
+            description = "patch employee information in the system",
+            responses = {
+                    @ApiResponse(
+                            description = "employee updated successfully",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Invalid input",
+                            responseCode = "400"
+                    ),
+                    @ApiResponse(
+                            description = "employee not found",
+                            responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "Internal server error",
+                            responseCode = "500"
+                    )
+            }
+    )
+
     @PatchMapping("/{id}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@Valid @RequestBody EmployeeDTO employeeDTO, @PathVariable Long id) {
         log.info("Request to update employee by id: {}", id);

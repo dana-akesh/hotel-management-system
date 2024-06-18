@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/reservations")
-@Tag(name = "Reservation Management", description = "Operations related to Reservation management")
+@Tag(name = "Reservation", description = "Operations related to Reservation management")
 public class ReservationController {
     private final Logger log = LoggerFactory.getLogger(ReservationController.class);
 

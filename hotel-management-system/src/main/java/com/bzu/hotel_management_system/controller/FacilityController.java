@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/facilities")
-@Tag(name = "Facility Management", description = "Operations related to facility management")
+@Tag(name = "Facility", description = "Operations related to facility management")
 public class FacilityController {
     private final Logger log = LoggerFactory.getLogger(FacilityController.class);
 
