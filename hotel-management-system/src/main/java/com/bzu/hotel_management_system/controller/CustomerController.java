@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users/customers")
+@RequestMapping("/api")
 @Tag(name = "Customer", description = "Operations related to customer management")
 public class CustomerController {
     private final Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -52,7 +52,7 @@ public class CustomerController {
 
     )
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/users/customers/{id}", params = "version=v1.0")
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
@@ -86,7 +86,7 @@ public class CustomerController {
 
     )
 
-    @PostMapping
+    @PostMapping(path ="/users/customers" , params = "version=v1.0")
     public ResponseEntity<CustomerDTO> addCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         if (customerDTO.getUserId() != null) {
             log.error("Cannot have an ID {}", customerDTO.getUserId());
@@ -124,7 +124,7 @@ public class CustomerController {
             }
     )
 
-    @PatchMapping("/{id}")
+    @PatchMapping(path = "/users/customers/{id}", params = "version=v1.0")
     public ResponseEntity<CustomerDTO> updateCustomerById(@PathVariable(name = "id") Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         // logic to update customer
         if (customerDTO == null || customerDTO.getName() == null || customerDTO.getUsername() == null) {
@@ -142,8 +142,8 @@ public class CustomerController {
 
     // delete customer
     @Operation(
-            description = "delete customer",
-            summary = "This is a summary for customers DELETE endpoint",
+            description = "delete customer v1.0",
+            summary = "This is a summary for customers DELETE v1.0 endpoint",
             responses = {
                     @ApiResponse(
                             description = "customer deleted successfully",
@@ -156,14 +156,84 @@ public class CustomerController {
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500"
+                    ),
+                    @ApiResponse(
+                            description = "Bad request",
+                            responseCode = "400"
+                    ),
+                    @ApiResponse(
+                            description = "Moved Permanently",
+                            responseCode = "301"
+                    )
+
+            }
+    )
+
+    @DeleteMapping(path ="/users/customers/{id}", params = "version=v1.0")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "id") Long id,
+                                               @RequestParam(name = "version", defaultValue = "v1.0") String version
+    ) {
+        // if version is v1.0, delete customer
+        if (version.equals("v1.0")) {
+            customerService.deleteCustomer(id);
+        } else if (version.equals("v1.1")) {
+            // if version is v1.1, redirect to v1.1 endpoint
+            return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
+
+        } else {
+            throw new BadRequestException("Invalid version", "version");
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(
+            description = "delete customer v1.1",
+            summary = "This is a summary for customers DELETE v1.1 endpoint",
+            responses = {
+                    @ApiResponse(
+                            description = "customer deleted successfully",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "customer not found",
+                            responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "Internal server error",
+                            responseCode = "500"
+                    ),
+                    @ApiResponse(
+                            description = "Bad request",
+                            responseCode = "400"
+                    ),
+                    @ApiResponse(
+                            description = "Moved Permanently",
+                            responseCode = "301"
+                    ),
+                    @ApiResponse(
+                            description = "No content",
+                            responseCode = "204"
                     )
             }
     )
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "id") Long id) {
+    @DeleteMapping(path = "/users/customers/{id}", params = "version=v1.1")
+    public ResponseEntity<Void> deleteCustomerV2(@PathVariable(name = "id") Long id,
+                                               @RequestParam(name = "version", defaultValue = "v1.1") String version
+    ) {
+        // if version is v1.1, delete customer
+        if (version.equals("v1.1")) {
+            customerService.deleteCustomer(id);
+        } else if (version.equals("v1.0")) {
+            // if version is v1.1, redirect to v1.2 endpoint
+            return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
+        } else {
+            throw new BadRequestException("Invalid version", "version");
+        }
+
         customerService.deleteCustomer(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
@@ -195,7 +265,7 @@ public class CustomerController {
             }
     )
 
-    @PatchMapping("/{id}/change-password")
+    @PatchMapping(path = "/users/customers/{id}/change-password", params = "version=v1.0")
     public ResponseEntity<CustomerDTO> changePassword(@PathVariable(name = "id") Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         // logic to change password
         if (customerDTO == null || customerDTO.getPassword() == null) {
@@ -236,7 +306,7 @@ public class CustomerController {
 
     )
 
-    @GetMapping("/{id}/reservations")
+    @GetMapping(path ="/users/customers/{id}/reservations", params = "version=v1.0")
     public ResponseEntity<CustomerDTO> getCustomerReservations(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerReservations(id));
     }
