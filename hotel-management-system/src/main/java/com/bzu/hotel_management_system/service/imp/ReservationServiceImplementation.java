@@ -2,9 +2,15 @@ package com.bzu.hotel_management_system.service.imp;
 
 import com.bzu.hotel_management_system.DTO.ReservationDTO;
 import com.bzu.hotel_management_system.entity.Reservation;
+import com.bzu.hotel_management_system.entity.User;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.ReservationRepository;
+import com.bzu.hotel_management_system.repository.UserRepository;
 import com.bzu.hotel_management_system.service.ReservationService;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +18,11 @@ import java.util.List;
 @Service
 public class ReservationServiceImplementation implements ReservationService {
     private ReservationRepository reservationRepository;
+    private UserRepository userRepository;
 
-    public ReservationServiceImplementation(ReservationRepository reservationRepository) {
+    public ReservationServiceImplementation(ReservationRepository reservationRepository, UserRepository userRepository) {
         this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -35,6 +43,10 @@ public class ReservationServiceImplementation implements ReservationService {
 
     @Override
     public ReservationDTO updateReservation(ReservationDTO reservationDTO) {
+        User user = getCurrentUser();
+        if (!user.getRole().equals("ADMIN") && !user.getUserId().equals(reservationDTO.getCustomer().getUserId())) {
+            throw new AccessDeniedException("You do not have permission to update this customer");
+        }
         // todo check if the reservation exists
         Reservation reservation = reservationRepository.findById(reservationDTO.getReservationId()).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "id", reservationDTO.getReservationId()));
@@ -54,12 +66,19 @@ public class ReservationServiceImplementation implements ReservationService {
     public ReservationDTO getReservationById(Long id) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "id", id));
-
+        User user = getCurrentUser();
+        if (!user.getRole().equals("ADMIN") && !user.getUserId().equals(reservation.getCustomer().getUserId())) {
+            throw new AccessDeniedException("You do not have permission to view this customer");
+        }
         return mapToDTO(reservation);
     }
 
     @Override
     public void deleteReservation(Long id) {
+        User user = getCurrentUser();
+        if (!user.getRole().equals("ADMIN") && !user.getUserId().equals(id)) {
+            throw new AccessDeniedException("You do not have permission to delete this customer");
+        }
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "id", id));
 
@@ -68,6 +87,10 @@ public class ReservationServiceImplementation implements ReservationService {
 
     @Override
     public ReservationDTO getReservationByUserId(Long id) {
+        User user = getCurrentUser();
+        if (!user.getRole().equals("ADMIN") && !user.getUserId().equals(id)) {
+            throw new AccessDeniedException("You do not have permission to view this customer");
+        }
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "id", id));
 
@@ -79,7 +102,10 @@ public class ReservationServiceImplementation implements ReservationService {
         // todo: check if this works
         Reservation reservation = reservationRepository.findByCustomerName(name).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "name", name));
-
+        User user = getCurrentUser();
+        if (!user.getRole().equals("ADMIN") && !user.getUserId().equals(reservation.getCustomer().getUserId())) {
+            throw new AccessDeniedException("You do not have permission to view this customer");
+        }
         return mapToDTO(reservation);
     }
 
@@ -87,7 +113,10 @@ public class ReservationServiceImplementation implements ReservationService {
     public ReservationDTO getReservationByDate(String date) {
         Reservation reservation = reservationRepository.findByDate(date).orElseThrow(
                 () -> new ResourceNotFoundException("Reservation", "date", date));
-
+        User user = getCurrentUser();
+        if (!user.getRole().equals("ADMIN") && !user.getUserId().equals(reservation.getCustomer().getUserId())) {
+            throw new AccessDeniedException("You do not have permission to view this customer");
+        }
         return mapToDTO(reservation);
     }
 
@@ -157,5 +186,10 @@ public class ReservationServiceImplementation implements ReservationService {
         return reservation;
     }
 
-
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found"));
+    }
 }

@@ -25,6 +25,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
     ports:
       - "8080:8080"
+    restart: always
 
 volumes:
   mysql_data:

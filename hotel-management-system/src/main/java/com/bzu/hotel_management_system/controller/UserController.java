@@ -60,45 +60,6 @@ public class UserController {
     }
 
 
-    // add new user
-    @Operation(
-            description = "Add new user",
-            summary = "This is a summary for users POST endpoint",
-            responses = {
-                    @ApiResponse(
-                            description = "User created successfully",
-                            responseCode = "201",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = UserDTO.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            description = "Invalid input",
-                            responseCode = "400"
-                    ),
-                    @ApiResponse(
-                            description = "User already exists",
-                            responseCode = "409"
-                    ),
-                    @ApiResponse(
-                            description = "Internal server error",
-                            responseCode = "500"
-                    )
-            }
-    )
-
-
-    @PostMapping
-    public ResponseEntity<UserDTO> addUser(@Valid @RequestBody UserDTO userDTO) {
-        if (userDTO.getUserId() != null) {
-            log.error("Cannot have an ID {}", userDTO);
-            throw new BadRequestException(UserController.class.getSimpleName(), "id");
-        }
-        UserDTO user = userService.addUser(userDTO);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
     // update user
     @Operation(
             summary = "Update User",

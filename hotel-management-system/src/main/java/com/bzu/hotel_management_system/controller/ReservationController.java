@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class ReservationController {
     )
 
     @GetMapping
-    public ResponseEntity<List<ReservationDTO>> getAllFacilities() {
+    public ResponseEntity<List<ReservationDTO>> getAllReservations() {
         log.info("Getting all reservations");
         List<ReservationDTO> reservations = reservationService.getAllReservations();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
@@ -162,7 +163,6 @@ public class ReservationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ReservationDTO> getReservationById(@PathVariable Long id) {
-        log.info("Request to get reservation by id: {}", id);
         ReservationDTO reservation = reservationService.getReservationById(id);
         return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
@@ -282,6 +282,7 @@ public class ReservationController {
     )
 
     @PatchMapping("/checkin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> approveCheckIn(@PathVariable Long id) {
         log.info("Request to approve check in by id: {}", id);
         reservationService.approveCheckIn(id);
@@ -312,6 +313,7 @@ public class ReservationController {
             }
     )
     @PatchMapping("/checkout/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> approveCheckOut(@PathVariable Long id) {
         log.info("Request to approve check out by id: {}", id);
         reservationService.approveCheckOut(id);
@@ -339,6 +341,7 @@ public class ReservationController {
             }
     )
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> approveCancelReservation(@PathVariable Long id) {
         log.info("Request to approve cancel reservation by id: {}", id);
         reservationService.approveCancelReservation(id);
