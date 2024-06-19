@@ -106,24 +106,6 @@ cd hotel-management-system
 #Compiles the project, runs test cases, and packages the application as a JAR file located into the target directory.
 .\mvnw package
 
-#Build a Docker image using the Dockerfile
-docker build -t example3:v1 .
-
-# Run the Docker container, this command maps port 8080 on your host machine to port 8080 in the container, to allow accessing the application using http://localhost:8080.
-docker run -it --detach --name example3 -p8080:8080 example3:v1
-
-# Clean the project
-./mvnw clean
-
-#Stop the container
-docker stop example3
-
-#Remove the container
-docker rm example3
-
-docker image tag  example3:v1 mkharma/example3:latest
-
-docker image push mkharma/example3:latest
 ```
 
 ## Postman File:
