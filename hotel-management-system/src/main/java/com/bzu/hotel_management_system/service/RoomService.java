@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface RoomService {
     // get all rooms
-    List<RoomDTO> getAllRooms();
+    List<RoomDTO> getAllRooms(int page, int size);
 
     RoomDTO getRoomById(Long id);
 

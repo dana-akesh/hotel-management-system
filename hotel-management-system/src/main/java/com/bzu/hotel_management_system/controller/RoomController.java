@@ -78,9 +78,10 @@ public class RoomController {
     )
 
     @GetMapping
-    public ResponseEntity<List<RoomDTO>> getAllRooms() {
+    public ResponseEntity<List<RoomDTO>> getAllRooms(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                     @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("Request to get all rooms");
-        List<RoomDTO> rooms = roomService.getAllRooms();
+        List<RoomDTO> rooms = roomService.getAllRooms(page,size);
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
