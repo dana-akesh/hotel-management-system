@@ -110,7 +110,7 @@ public class TaskController {
                     }
             )
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTaskById(Long id) {
         log.info("Request to get task by id: {}", id);
         TaskDTO task = taskService.getTaskById(id);
@@ -175,7 +175,7 @@ public class TaskController {
             }
     )
 
-    @GetMapping("/tasks/employee/{employeeId}")
+    @GetMapping("/employee/{employeeId}")
     public ResponseEntity<List<TaskDTO>> getTaskByEmployeeId(@PathVariable Long employeeId) {
         log.info("Request to get task by employee id: {}", employeeId);
         List<TaskDTO> tasks = taskService.getTaskByEmployeeId(employeeId);
@@ -206,7 +206,7 @@ public class TaskController {
             }
     )
 
-    @PatchMapping("/tasks/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@Valid @RequestBody TaskDTO taskDTO, @PathVariable Long id) {
         log.info("Request to update task by id: {}", id);
         TaskDTO task = taskService.updateTask(taskDTO);
@@ -233,7 +233,7 @@ public class TaskController {
             }
     )
 
-    @DeleteMapping("/tasks/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         log.info("Request to delete task by id: {}", id);
         taskService.deleteTask(id);
