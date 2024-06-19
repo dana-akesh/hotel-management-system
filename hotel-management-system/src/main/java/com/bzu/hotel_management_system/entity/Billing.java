@@ -15,14 +15,13 @@ public class Billing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long customerId;
-    private Long reservationId;
+
     private double amount;
     private String date;
     private boolean isPaid;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     private Customer customer;
 
     @ManyToOne

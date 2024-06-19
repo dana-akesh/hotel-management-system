@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BillingDTO {
     private Long id;
-    private Long customerId;
-    private Long reservationId;
     private double amount;
     private String date;
     private boolean isPaid;
+    private List<CustomerDTO> customers;
+    private List<ReservationDTO> reservations;
 }

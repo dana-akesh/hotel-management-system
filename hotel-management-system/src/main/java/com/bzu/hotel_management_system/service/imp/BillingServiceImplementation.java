@@ -5,9 +5,10 @@ import com.bzu.hotel_management_system.entity.Billing;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.BillingRepository;
 import com.bzu.hotel_management_system.service.BillingService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class BillingServiceImplementation implements BillingService {
     private BillingRepository billingRepository;
 
@@ -40,8 +41,6 @@ public class BillingServiceImplementation implements BillingService {
     public BillingDTO updateBilling(BillingDTO billingDTO) {
         Billing billing = billingRepository.findById(billingDTO.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Billing", "id", billingDTO.getId()));
-        billing.setCustomerId(billingDTO.getCustomerId());
-        billing.setReservationId(billingDTO.getReservationId());
         billing.setAmount(billingDTO.getAmount());
         billing.setDate(billingDTO.getDate());
         billing.setPaid(billingDTO.isPaid());
@@ -59,8 +58,6 @@ public class BillingServiceImplementation implements BillingService {
     public BillingDTO mapToDTO(Billing billing) {
         BillingDTO billingDTO = new BillingDTO();
         billingDTO.setId(billing.getId());
-        billingDTO.setCustomerId(billing.getCustomer().getUserId());
-        billingDTO.setReservationId(billing.getReservation().getReservationId());
         billingDTO.setAmount(billing.getAmount());
         billingDTO.setDate(billing.getDate());
         billingDTO.setPaid(billing.isPaid());
@@ -70,8 +67,6 @@ public class BillingServiceImplementation implements BillingService {
     public Billing mapToEntity(BillingDTO billingDTO) {
         Billing billing = new Billing();
         billing.setId(billingDTO.getId());
-        billing.setCustomerId(billingDTO.getCustomerId());
-        billing.setReservationId(billingDTO.getReservationId());
         billing.setAmount(billingDTO.getAmount());
         billing.setDate(billingDTO.getDate());
         billing.setPaid(billingDTO.isPaid());

@@ -31,8 +31,7 @@ public class Reservation {
     @JoinColumn(name = "reservationRoomId")
     private ReservationRoom reservationRoom;
 
-    @ManyToOne
-    @JoinColumn(name = "billingId")
-    private Billing billing;
+    @OneToMany(mappedBy = "reservation")
+    private List<Billing> billings;
 }
 
