@@ -15,6 +15,8 @@ import java.util.List;
 public class ReservationDTO {
     private Long reservationId;
     private Customer customer;
+    private Boolean isCheckIn;
+    private Boolean isCheckOut;
     private String date;
     private String status;
     private ReservationRoom reservationRoom;

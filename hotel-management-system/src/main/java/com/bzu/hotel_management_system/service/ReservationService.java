@@ -24,4 +24,7 @@ public interface ReservationService {
     ReservationDTO getReservationByDate(String date);
 
     void approveCancelReservation(Long id);
+
+    void approveCheckIn(Long id);
+    void approveCheckOut(Long id);
 }

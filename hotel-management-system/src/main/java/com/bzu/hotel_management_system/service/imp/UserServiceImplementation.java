@@ -17,19 +17,6 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDTO addUser(UserDTO userDTO) {
-        // check if the user already exists
-        userRepository.findById(userDTO.getUserId()).orElseThrow(
-                () -> new ResourceNotFoundException("User", "id", userDTO.getUserId()));
-
-        User user = mapToEntity(userDTO);
-        User newUser = userRepository.save(user);
-
-        UserDTO userResponse = mapToDTO(newUser);
-        return userResponse;
-    }
-
-    @Override
     public UserDTO updateUser(UserDTO userDTO, Long id) {
         // check if the user exists
         User user = userRepository.findById(userDTO.getUserId()).orElseThrow(

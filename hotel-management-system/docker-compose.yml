@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hotelManagementDB
+      MYSQL_LOG_CONSOLE: "true"  # Enable console logging
+      MYSQL_LOG_QUERIES: "true"  # Log all queries
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hotelManagementDB?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC  # Update MySQL hostname to use service name
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  mysql_data:
+    driver: local
