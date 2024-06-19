@@ -114,6 +114,7 @@ after running the application, you can access the API documentation through the 
 ```http 
 http://localhost:8080/v3/api-docs
 ```
+or you can download the postman file from the following link: [Postman File](
 
 
 ## Swaggerhub:
