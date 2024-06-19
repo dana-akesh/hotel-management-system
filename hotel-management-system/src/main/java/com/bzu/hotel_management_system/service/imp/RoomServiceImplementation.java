@@ -5,9 +5,13 @@ import com.bzu.hotel_management_system.entity.Room;
 import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.repository.RoomRepository;
 import com.bzu.hotel_management_system.service.RoomService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImplementation implements RoomService {
@@ -18,10 +22,12 @@ public class RoomServiceImplementation implements RoomService {
     }
 
     @Override
-    public List<RoomDTO> getAllRooms() {
-        List<Room> rooms = roomRepository.findAll();
+    public List<RoomDTO> getAllRooms(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Room> roomsPage = roomRepository.findAll(pageable);
+        List<Room> rooms = roomsPage.getContent();
         if (!rooms.isEmpty()) {
-            return rooms.stream().map(this::mapToDTO).toList();
+            return rooms.stream().map(this::mapToDTO).collect(Collectors.toList());
         }
         return List.of();
     }
