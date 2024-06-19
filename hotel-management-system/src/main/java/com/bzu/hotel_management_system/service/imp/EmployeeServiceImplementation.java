@@ -68,9 +68,9 @@ public class EmployeeServiceImplementation implements EmployeeService {
 
         employeeDTO.setEmployeeId(employee.getEmployeeId());
         employeeDTO.setName(employee.getName());
-        employeeDTO.setPassword(employee.getPassword());
-        employeeDTO.setRole(String.valueOf(employee.getRole()));
-        employeeDTO.setUsername(employee.getUsername());
+        employeeDTO.setName(employee.getName());
+        employeeDTO.setDOB(String.valueOf(employee.getDOB()));
+        employeeDTO.setPhone(employee.getPhone());
         employeeDTO.setTasks(employee.getTasks());
 
         return employeeDTO;
@@ -83,9 +83,9 @@ public class EmployeeServiceImplementation implements EmployeeService {
         //todo employee.setEmployeeId(employeeDTO.getEmployeeId());
         employee.setName(employeeDTO.getName());
         employee.setTasks(employeeDTO.getTasks());
-        employee.setPassword(employeeDTO.getPassword());
-        employee.setRole(Role.valueOf(employeeDTO.getRole()));
-        employee.setUsername(employeeDTO.getUsername());
+        employee.setName(employeeDTO.getName());
+        employee.setPhone(employeeDTO.getPhone());
+        employee.setDOB(employeeDTO.getDOB());
 
         return employee;
     }

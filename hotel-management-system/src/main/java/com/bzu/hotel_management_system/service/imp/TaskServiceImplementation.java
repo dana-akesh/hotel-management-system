@@ -89,7 +89,7 @@ public class TaskServiceImplementation implements TaskService {
         taskDTO.setTaskStatus(task.getTaskStatus());
 
         // todo check
-        taskDTO.setEmployeeId(task.getEmployee().getUserId());
+        taskDTO.setEmployeeId(task.getEmployee().getEmployeeId());
 
         return taskDTO;
     }
