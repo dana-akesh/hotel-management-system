@@ -16,6 +16,8 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
+    private Boolean isCheckIn;
+    private Boolean isCheckOut;
 
     @ManyToOne
     @JoinColumn(name = "customerId")

@@ -103,6 +103,32 @@ public class ReservationServiceImplementation implements ReservationService {
         }
     }
 
+    @Override
+    public void approveCheckIn(Long id) {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Reservation", "id", id));
+
+        if(!reservation.getIsCheckIn()){
+            reservation.setIsCheckIn(true);
+            reservationRepository.save(reservation);
+        } else {
+            throw new IllegalStateException("Reservation is already checked in");
+        }
+    }
+
+    @Override
+    public void approveCheckOut(Long id) {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Reservation", "id", id));
+
+        if(!reservation.getIsCheckOut()){
+            reservation.setIsCheckOut(true);
+            reservationRepository.save(reservation);
+        } else {
+            throw new IllegalStateException("Reservation is already checked OUT");
+        }
+    }
+
     private ReservationDTO mapToDTO(Reservation reservation) {
         ReservationDTO reservationDTO = new ReservationDTO();
 
@@ -111,6 +137,8 @@ public class ReservationServiceImplementation implements ReservationService {
         //todo reservationDTO.setReservationRooms(reservation.getReservationRooms());
         reservationDTO.setDate(reservation.getDate());
         reservationDTO.setStatus(reservation.getStatus());
+        reservationDTO.setIsCheckIn(reservation.getIsCheckIn());
+        reservationDTO.setIsCheckOut(reservation.getIsCheckOut());
 
         return reservationDTO;
     }
@@ -123,8 +151,11 @@ public class ReservationServiceImplementation implements ReservationService {
         //todo reservation.setReservationRooms(reservationDTO.getReservationRooms());
         reservation.setDate(reservationDTO.getDate());
         reservation.setStatus(reservationDTO.getStatus());
+        reservation.setIsCheckIn(reservationDTO.getIsCheckIn());
+        reservation.setIsCheckOut(reservationDTO.getIsCheckOut());
 
         return reservation;
     }
+
 
 }

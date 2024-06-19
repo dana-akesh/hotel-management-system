@@ -121,6 +121,10 @@ public class ReservationController {
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500"
+                    ),
+                    @ApiResponse(
+                            description = "no content",
+                            responseCode = "204"
                     )
             }
     )
@@ -251,6 +255,67 @@ public class ReservationController {
         log.info("Request to get reservation by date: {}", date);
         ReservationDTO reservation = reservationService.getReservationByDate(date);
         return new ResponseEntity<>(reservation, HttpStatus.OK);
+    }
+
+    // approveCheckIn
+    @Operation(
+            description = "approve check in",
+            summary = "This is a summary for reservation PATCH endpoint",
+            responses = {
+                    @ApiResponse(
+                            description = "reservation checked in successfully",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "reservation not found",
+                            responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "Internal server error",
+                            responseCode = "500"
+                    ),
+                    @ApiResponse(
+                            description = "no content",
+                            responseCode = "204"
+                    )
+            }
+    )
+
+    @PatchMapping("/checkin/{id}")
+    public ResponseEntity<Void> approveCheckIn(@PathVariable Long id) {
+        log.info("Request to approve check in by id: {}", id);
+        reservationService.approveCheckIn(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // approveCheckOut
+    @Operation(
+            description = "approve check out",
+            summary = "This is a summary for reservation PATCH endpoint",
+            responses = {
+                    @ApiResponse(
+                            description = "reservation checked out successfully",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "reservation not found",
+                            responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "Internal server error",
+                            responseCode = "500"
+                    ),
+                    @ApiResponse(
+                            description = "no content",
+                            responseCode = "204"
+                    )
+            }
+    )
+    @PatchMapping("/checkout/{id}")
+    public ResponseEntity<Void> approveCheckOut(@PathVariable Long id) {
+        log.info("Request to approve check out by id: {}", id);
+        reservationService.approveCheckOut(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
