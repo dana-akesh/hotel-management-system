@@ -64,7 +64,7 @@ organization. With the use of OpenAi 3.1.0 it allows the user to add, update, an
 </ol>
 
 ## ER Diagram:
-![HotelManagmentSystemER drawio](https://github.com/dana-akesh/hotel-management-system/assets/86303193/c325b0b6-3055-45fa-a47d-170ba8964518)
+![HotelManagmentSystemER drawio(1)](https://github.com/dana-akesh/hotel-management-system/assets/86303193/00e39bce-86b2-43db-8311-c6a7974a6d7a)
 
 ## Prerequisites:
 
