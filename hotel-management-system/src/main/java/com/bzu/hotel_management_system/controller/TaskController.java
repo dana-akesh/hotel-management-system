@@ -142,7 +142,7 @@ public class TaskController {
     )
 
     @PostMapping
-    public ResponseEntity<TaskDTO> addCustomer(@Valid @RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> addTask(@Valid @RequestBody TaskDTO taskDTO) {
         if (taskDTO.getTaskId() != null) {
             log.error("Cannot have an ID {}", taskDTO.getTaskId());
             throw new BadRequestException(TaskController.class.getSimpleName(), "id");
