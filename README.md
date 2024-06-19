@@ -64,6 +64,7 @@ organization. With the use of OpenAi 3.1.0 it allows the user to add, update, an
 </ol>
 
 ## ER Diagram:
+![ER Diagram](https://github.com/dana-akesh/hotel-management-system/blob/master/HotelManagmentSystemER.drawio.png)
 
 ## Prerequisites:
 
@@ -99,22 +100,20 @@ mvn spring-boot:run
   ```
 
 ## Docker:
-#### Build the Docker Image
+#### Docker Image on DockerHub:
+To pull the latest Docker image of the hotel management system from Docker Hub, use the following command:
 ```bash
-git clone https://github.com/dana-akesh/hotel-management-system
-cd hotel-management-system
-#Compiles the project, runs test cases, and packages the application as a JAR file located into the target directory.
-.\mvnw package
-
+docker pull bakerdwaikat/hotel-management-system:latest
 ```
 
 ## Postman File:
-after running the application, you can access the API documentation through the following link:
+after running the application, you can access the API documentation through the following link, then go to import and upload the postman url:
 #### API Documentation
 ```http 
 http://localhost:8080/v3/api-docs
 ```
-or you can download the postman file from the following link: [Postman File](
+or you can download the postman file from the following link: [Postman File](https://github.com/dana-akesh/hotel-management-system/blob/master/OpenApi%20specification%20for%20Hotel%20Management%20System.postman_collection.json)
+and then import it to your postman.
 
 
 ## Swaggerhub:
