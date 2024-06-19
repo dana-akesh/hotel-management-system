@@ -104,9 +104,6 @@ mvn spring-boot:run
 ```bash
 git clone https://github.com/dana-akesh/hotel-management-system
 cd hotel-management-system
-#Compiles the project, runs test cases, and packages the application as a JAR file located into the target directory.
-.\mvnw package
-
 ```
 
 ## Postman File:
