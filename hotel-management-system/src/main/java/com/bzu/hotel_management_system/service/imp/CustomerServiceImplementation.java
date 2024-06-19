@@ -81,14 +81,18 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public void deleteCustomer(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Customer", "id", id));
+
         Customer customer = customerRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "id", id));
 
-        User user = getCurrentUser();
-        if (!user.getRole().equals("ADMIN")) {
+        User user1 = getCurrentUser();
+        if (user1.getRole().equals("ADMIN")) {
             throw new AccessDeniedException("You do not have permission to delete this customer");
         }
 
+        userRepository.delete(user);
         customerRepository.delete(customer);
     }
 

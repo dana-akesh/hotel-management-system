@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users/customers")
+@RequestMapping("/api")
 @Tag(name = "Customer", description = "Operations related to customer management")
 public class CustomerController {
     private final Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -53,7 +53,7 @@ public class CustomerController {
 
     )
 
-    @GetMapping("/{id}")
+    @GetMapping("/v1/users/customers/{id}")
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
@@ -87,7 +87,7 @@ public class CustomerController {
             }
     )
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/v1/users/customers/{id}")
     public ResponseEntity<CustomerDTO> updateCustomerById(@PathVariable(name = "id") Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         // logic to update customer
         if (customerDTO == null || customerDTO.getName() == null || customerDTO.getUsername() == null) {
@@ -123,10 +123,36 @@ public class CustomerController {
             }
     )
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/v1/users/customers/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "id") Long id) {
         customerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // delete customer
+    @Operation(
+            description = "delete customer v1.1",
+            summary = "This is a summary for customers DELETE endpoint",
+            responses = {
+                    @ApiResponse(
+                            description = "customer deleted successfully",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "customer not found",
+                            responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "Internal server error",
+                            responseCode = "500"
+                    )
+            }
+    )
+
+    @DeleteMapping("/v1.1/users/customers/{id}")
+    public ResponseEntity<Void> deleteCustomerV1(@PathVariable(name = "id") Long id) {
+        customerService.deleteCustomer(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
@@ -158,7 +184,7 @@ public class CustomerController {
             }
     )
 
-    @PatchMapping("/{id}/change-password")
+    @PatchMapping("/v1/users/customers/{id}/change-password")
     public ResponseEntity<CustomerDTO> changePassword(@PathVariable(name = "id") Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         // logic to change password
         if (customerDTO == null || customerDTO.getPassword() == null) {
@@ -199,7 +225,7 @@ public class CustomerController {
 
     )
 
-    @GetMapping("/{id}/reservations")
+    @GetMapping("/v1/users/customers/{id}/reservations")
     public ResponseEntity<CustomerDTO> getCustomerReservations(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerReservations(id));
     }
