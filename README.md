@@ -63,7 +63,6 @@ Doc
 - IntelliJ IDEA (or any Java IDE)
 - Postman (or any API testing tool)
 - Maven
-- Spring Boot
 - Java Development Kit (JDK) 19 or higher
 - MySQL Workbench 
 - Docker 
@@ -86,6 +85,11 @@ CREATE DATABASE hotelmanagementsystemdb;
 #### Check the application.properties file
 link to application.properties file: [application.properties](https://github.com/dana-akesh/hotel-management-system/blob/master/hotel-management-system/src/main/resources/application.properties)
 
+#### Build & Run the project
+```bash
+mvn clean install
+mvn spring-boot:run
+  ```
 
 ## Docker:
 
@@ -105,3 +109,6 @@ http://localhost:8080/swagger-ui/swagger-ui/index.html#/
 ```
 
 ## Learned Lessons:
+- Authentication and Authorization for different roles using JWT.
+- The usage of OpenAi 3.1.0 to document the API from the source code.
+- How to use Docker to containerize the application, and make it run on different devices.
