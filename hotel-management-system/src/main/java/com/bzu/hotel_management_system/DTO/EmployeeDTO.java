@@ -14,5 +14,8 @@ import java.util.List;
 public class EmployeeDTO extends UserDTO {
 
     private Long employeeId;
+    private String name;
+    private String phone;
+    private String DOB;
     private List<Task> tasks;
 }
