@@ -17,8 +17,15 @@
 ## Description:
 
 The Hotel Management System API provides endpoints for managing hotel-related operations within a business or
-organization. With the use of OpenAi 3.1.0 it allows the user to add, update, and delete the core reasources which ----.
-Doc
+organization. With the use of OpenAi 3.1.0 it allows the user to add, update, and delete the core reasources which are the user, customer, employee, reservation, task, and billing.
+
+## Features:
+- Authentication and Authorization for different roles using JWT.
+- Versioning the API.
+- Pagination.
+- Refresh token.
+- Dockerize the application.
+
 
 ## Core Resources:
 
@@ -92,6 +99,32 @@ mvn spring-boot:run
   ```
 
 ## Docker:
+#### Build the Docker Image
+```bash
+git clone https://github.com/dana-akesh/hotel-management-system
+cd hotel-management-system
+#Compiles the project, runs test cases, and packages the application as a JAR file located into the target directory.
+.\mvnw package
+
+#Build a Docker image using the Dockerfile
+docker build -t example3:v1 .
+
+# Run the Docker container, this command maps port 8080 on your host machine to port 8080 in the container, to allow accessing the application using http://localhost:8080.
+docker run -it --detach --name example3 -p8080:8080 example3:v1
+
+# Clean the project
+./mvnw clean
+
+#Stop the container
+docker stop example3
+
+#Remove the container
+docker rm example3
+
+docker image tag  example3:v1 mkharma/example3:latest
+
+docker image push mkharma/example3:latest
+```
 
 ## Postman File:
 after running the application, you can access the API documentation through the following link:
