@@ -9,7 +9,7 @@
 - [ER Diagram](#er-diagram)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Docker Image on DockerHub](#docker-image-on-dockerhub)
+- [Docker](#docker)
 - [Postman File](#postman-file)
 - [Swaggerhub](#swaggerhub)
 - [Learned Lessons](#learned-lessons)
@@ -112,7 +112,7 @@ after running the application, you can access the API documentation through the 
 ```http 
 http://localhost:8080/v3/api-docs
 ```
-or you can download the postman file from the following link: [Postman File](
+or you can download the postman file from the following link: [Postman File](https://github.com/dana-akesh/hotel-management-system/blob/master/OpenApi%20specification%20for%20Hotel%20Management%20System.postman_collection.json)
 
 
 ## Swaggerhub:
