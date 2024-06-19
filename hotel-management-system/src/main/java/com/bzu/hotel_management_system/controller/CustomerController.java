@@ -2,6 +2,7 @@ package com.bzu.hotel_management_system.controller;
 
 import com.bzu.hotel_management_system.DTO.CustomerDTO;
 import com.bzu.hotel_management_system.exception.BadRequestException;
+import com.bzu.hotel_management_system.exception.ResourceNotFoundException;
 import com.bzu.hotel_management_system.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,44 +58,6 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
-    // add customer
-    @Operation(
-            description = "add customer",
-            summary = "This is a summary for customers POST endpoint",
-            responses = {
-                    @ApiResponse(
-                            description = "User created successfully",
-                            responseCode = "201",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = CustomerDTO.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            description = "Invalid input",
-                            responseCode = "400"
-                    ),
-                    @ApiResponse(
-                            description = "User already exists",
-                            responseCode = "409"
-                    ),
-                    @ApiResponse(
-                            description = "Internal server error",
-                            responseCode = "500"
-                    )
-            }
-
-    )
-
-    @PostMapping
-    public ResponseEntity<CustomerDTO> addCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
-        if (customerDTO.getUserId() != null) {
-            log.error("Cannot have an ID {}", customerDTO.getUserId());
-            throw new BadRequestException(CustomerController.class.getSimpleName(), "id");
-        }
-        CustomerDTO user = customerService.addCustomer(customerDTO);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
 
     // update customer
     @Operation(
@@ -133,7 +96,7 @@ public class CustomerController {
 
         // check if user exists
         if (customerService.getCustomerById(id) == null) {
-            throw new BadRequestException("customer not found", "customer not found");
+            throw new ResourceNotFoundException("Customer","id", id);
         }
 
         CustomerDTO user = customerService.updateCustomerById(customerDTO, id);
@@ -204,7 +167,7 @@ public class CustomerController {
 
         // check if user exists
         if (customerService.getCustomerById(id) == null) {
-            throw new BadRequestException("customer not found", "customer not found");
+            throw new ResourceNotFoundException("Customer","id", id);
         }
 
         CustomerDTO user = customerService.changePassword(customerDTO.getPassword(), id);

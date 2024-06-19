@@ -19,10 +19,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static com.bzu.hotel_management_system.entity.Permission.*;
 import static com.bzu.hotel_management_system.entity.Role.*;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -58,6 +55,11 @@ public class SecurityConfiguration {
                                 .requestMatchers(POST, "/api/v1/users/employees/**").hasAuthority(ADMIN_CREATE.name())
                                 .requestMatchers(PUT, "/api/v1/users/employees/**").hasAuthority(ADMIN_UPDATE.name())
                                 .requestMatchers(DELETE, "/api/v1/users/employees/**").hasAuthority(ADMIN_DELETE.name())
+                                .requestMatchers("/api/v1/users/customers/**").hasAnyRole(ADMIN.name(), CUSTOMER.name())
+                                .requestMatchers(GET, "/api/v1/users/customers/**").hasAnyAuthority(ADMIN_READ.name(), CUSTOMER_READ.name())
+                                .requestMatchers(PUT, "/api/v1/users/customers/**").hasAuthority(ADMIN_UPDATE.name())
+                                .requestMatchers(PATCH, "/api/v1/users/customers/**").hasAnyAuthority(ADMIN_UPDATE.name(), CUSTOMER_UPDATE.name())
+                                .requestMatchers(DELETE, "/api/v1/users/customers/**").hasAuthority(ADMIN_DELETE.name())
                                 .anyRequest()
                                 .authenticated()
                 )
