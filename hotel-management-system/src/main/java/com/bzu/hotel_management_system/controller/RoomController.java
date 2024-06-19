@@ -109,7 +109,7 @@ public class RoomController {
                     }
             )
 
-    @GetMapping("/rooms/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<RoomDTO> getRoomById(Long id) {
         log.info("Request to get room by id: {}", id);
         RoomDTO room = roomService.getRoomById(id);
@@ -174,7 +174,7 @@ public class RoomController {
             }
     )
 
-    @PatchMapping("/rooms/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<RoomDTO> updateRoom(@Valid @RequestBody RoomDTO roomDTO, @PathVariable Long id) {
         log.info("Request to update room by id: {}", id);
         RoomDTO room = roomService.updateRoom(roomDTO);
@@ -201,7 +201,7 @@ public class RoomController {
             }
     )
 
-    @DeleteMapping("/rooms/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         log.info("Request to delete room by id: {}", id);
         roomService.deleteRoom(id);
