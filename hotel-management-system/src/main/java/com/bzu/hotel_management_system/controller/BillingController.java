@@ -1,8 +1,8 @@
 package com.bzu.hotel_management_system.controller;
 
-import com.bzu.hotel_management_system.DTO.EmployeeDTO;
+import com.bzu.hotel_management_system.DTO.BillingDTO;
 import com.bzu.hotel_management_system.exception.BadRequestException;
-import com.bzu.hotel_management_system.service.EmployeeService;
+import com.bzu.hotel_management_system.service.BillingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,28 +18,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users/employees")
-@Tag(name = "Employee", description = "Operations related to Employee management")
-public class EmployeeController {
-    private final Logger log = LoggerFactory.getLogger(EmployeeController.class);
+@RequestMapping("/api/v2/users/billings")
+@Tag(name = "Billing", description = "Operations related to Billing management")
+public class BillingController {
+    private final Logger log = LoggerFactory.getLogger(BillingController.class);
 
-    private EmployeeService employeeService;
+    private BillingService billingService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public BillingController(BillingService billingService) {
+        this.billingService = billingService;
     }
 
-    //get all employees
+    //get all billings
     @Operation(
-            summary = "Get all employees",
-            description = "Get all employees in the system",
+            summary = "Get all billings",
+            description = "Get all billings in the system",
             responses = {
                     @ApiResponse(
                             description = "Successful operation",
                             responseCode = "200",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = EmployeeDTO.class)
+                                    schema = @Schema(implementation = BillingDTO.class)
                             )
                     ),
                     @ApiResponse(
@@ -47,7 +47,7 @@ public class EmployeeController {
                             responseCode = "400",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = EmployeeDTO.class)
+                                    schema = @Schema(implementation = BillingDTO.class)
                             )
                     ),
                     @ApiResponse(
@@ -55,7 +55,7 @@ public class EmployeeController {
                             responseCode = "401",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = EmployeeDTO.class)
+                                    schema = @Schema(implementation = BillingDTO.class)
                             )
                     ),
                     @ApiResponse(
@@ -63,33 +63,33 @@ public class EmployeeController {
                             responseCode = "403",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = EmployeeDTO.class)
+                                    schema = @Schema(implementation = BillingDTO.class)
                             )
                     ),
                     @ApiResponse(
-                            description = "No employees found",
+                            description = "No billings found",
                             responseCode = "404",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = EmployeeDTO.class)
+                                    schema = @Schema(implementation = BillingDTO.class)
                             )
                     )
             }
     )
     @GetMapping
-    public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
-        log.info("Getting all employees");
-        List<EmployeeDTO> employees = employeeService.getAllEmployees();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+    public ResponseEntity<List<BillingDTO>> getAllBillings() {
+        log.info("Getting all billings");
+        List<BillingDTO> billings = billingService.getAllBillings();
+        return new ResponseEntity<>(billings, HttpStatus.OK);
     }
 
-    //add employee
+    //add billing
     @Operation(
-            summary = "Add a employee",
-            description = "Add a employee to the system",
+            summary = "Add a billing",
+            description = "Add a billing to the system",
             responses = {
                     @ApiResponse(
-                            description = "employee added successfully",
+                            description = "billing added successfully",
                             responseCode = "201"
                     ),
                     @ApiResponse(
@@ -97,7 +97,7 @@ public class EmployeeController {
                             responseCode = "400"
                     ),
                     @ApiResponse(
-                            description = "employee already exists",
+                            description = "billing already exists",
                             responseCode = "409"
                     ),
                     @ApiResponse(
@@ -106,24 +106,24 @@ public class EmployeeController {
                     )
             }
     )
-    
+
     @PostMapping
-    public ResponseEntity<EmployeeDTO> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
-        if (employeeDTO.getEmployeeId() != null) {
-            log.error("Cannot have an ID {}", employeeDTO.getEmployeeId());
-            throw new BadRequestException(EmployeeController.class.getSimpleName(), "id");
+    public ResponseEntity<BillingDTO> addBilling(@Valid @RequestBody BillingDTO billingDTO) {
+        if (billingDTO.getId() != null) {
+            log.error("Cannot have an ID {}", billingDTO.getId());
+            throw new BadRequestException(BillingController.class.getSimpleName(), "id");
         }
-        EmployeeDTO employee = employeeService.addEmployee(employeeDTO);
-        return new ResponseEntity<>(employee, HttpStatus.CREATED);
+        BillingDTO billing = billingService.addBilling(billingDTO);
+        return new ResponseEntity<>(billing, HttpStatus.CREATED);
     }
 
-    //update employee
+    //update billing
     @Operation(
-            summary = "patch a employee",
-            description = "patch employee information in the system",
+            summary = "patch a billing",
+            description = "patch billing information in the system",
             responses = {
                     @ApiResponse(
-                            description = "employee updated successfully",
+                            description = "billing updated successfully",
                             responseCode = "200"
                     ),
                     @ApiResponse(
@@ -131,7 +131,7 @@ public class EmployeeController {
                             responseCode = "400"
                     ),
                     @ApiResponse(
-                            description = "employee not found",
+                            description = "billing not found",
                             responseCode = "404"
                     ),
                     @ApiResponse(
@@ -142,24 +142,24 @@ public class EmployeeController {
     )
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@Valid @RequestBody EmployeeDTO employeeDTO, @PathVariable Long id) {
-        log.info("Request to update employee by id: {}", id);
-        EmployeeDTO employee  = employeeService.updateEmployee(employeeDTO);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+    public ResponseEntity<BillingDTO> updateBilling(@Valid @RequestBody BillingDTO billingDTO, @PathVariable Long id) {
+        log.info("Request to update billing by id: {}", id);
+        BillingDTO billing  = billingService.updateBilling(billingDTO);
+        return new ResponseEntity<>(billing, HttpStatus.OK);
     }
 
-    //get employee by id
+    //get billing by id
     @Operation
             (
-                    summary = "Get employee by id",
-                    description = "Get employee by id",
+                    summary = "Get billing by id",
+                    description = "Get billing by id",
                     responses = {
                             @ApiResponse(
                                     description = "Success",
                                     responseCode = "200"
                             ),
                             @ApiResponse(
-                                    description = "employee not found",
+                                    description = "billing not found",
                                     responseCode = "404"
                             ),
                             @ApiResponse(
@@ -175,23 +175,23 @@ public class EmployeeController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(Long id) {
-        log.info("Request to get employee by id: {}", id);
-        EmployeeDTO employee = employeeService.getEmployeeById(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+    public ResponseEntity<BillingDTO> getBillingById(Long id) {
+        log.info("Request to get billing by id: {}", id);
+        BillingDTO billing = billingService.getBillingById(id);
+        return new ResponseEntity<>(billing, HttpStatus.OK);
     }
-    
-    //delete employee
+
+    //delete billing
     @Operation(
-            summary = "Delete a employee",
-            description = "Delete a employee in the system",
+            summary = "Delete a billing",
+            description = "Delete a billing in the system",
             responses = {
                     @ApiResponse(
-                            description = "employee deleted successfully",
+                            description = "billing deleted successfully",
                             responseCode = "204"
                     ),
                     @ApiResponse(
-                            description = "employee not found",
+                            description = "billing not found",
                             responseCode = "404"
                     ),
                     @ApiResponse(
@@ -204,8 +204,8 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
-        log.info("Request to delete employee by id: {}", id);
-        employeeService.deleteEmployee(id);
+        log.info("Request to delete billing by id: {}", id);
+        billingService.deleteBilling(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

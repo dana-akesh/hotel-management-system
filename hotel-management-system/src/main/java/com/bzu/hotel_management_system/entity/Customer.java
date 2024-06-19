@@ -16,4 +16,8 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer")
     private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "reservation")
+    private List<Billing> billings;
+
 }

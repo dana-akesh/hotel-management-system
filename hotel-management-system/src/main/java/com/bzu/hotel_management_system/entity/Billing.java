@@ -5,34 +5,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor   //automatically generates a constructor with a parameter for each field in your class
 @NoArgsConstructor     // generates a constructor with no parameter
 @Entity
-public class Reservation {
+public class Billing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long customerId;
     private Long reservationId;
+    private double amount;
+    private String date;
+    private boolean isPaid;
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "reservation")
-    private List<ReservationRoom> reservationRooms;
-
-    private String date;
-    private String status;
-
     @ManyToOne
-    @JoinColumn(name = "reservationRoomId")
-    private ReservationRoom reservationRoom;
+    @JoinColumn(name = "reservationId", nullable = false)
+    private Reservation reservation;
 
-    @ManyToOne
-    @JoinColumn(name = "billingId")
-    private Billing billing;
 }
-
