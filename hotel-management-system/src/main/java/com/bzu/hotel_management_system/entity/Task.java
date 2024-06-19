@@ -17,6 +17,7 @@ public class Task {
     private String taskName;
     private String taskDescription;
     private String taskStatus;
+    private Long facilityId;
 
     @ManyToOne
     @JoinColumn(name = "employeeId")
