@@ -66,7 +66,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
     private EmployeeDTO mapToDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
 
-        //employeeDTO.setEmployeeId(employee.getEmployeeId());
+        employeeDTO.setEmployeeId(employee.getEmployeeId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setPassword(employee.getPassword());
         employeeDTO.setRole(String.valueOf(employee.getRole()));
@@ -80,7 +80,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
     private Employee mapToEntity(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
 
-        //employee.setEmployeeId(employeeDTO.getEmployeeId());
+        //todo employee.setEmployeeId(employeeDTO.getEmployeeId());
         employee.setName(employeeDTO.getName());
         employee.setTasks(employeeDTO.getTasks());
         employee.setPassword(employeeDTO.getPassword());

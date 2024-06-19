@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v2/users/billings")
+@RequestMapping("/api/v2/users/customers/billings")
 @Tag(name = "Billing", description = "Operations related to Billing management")
 public class BillingController {
     private final Logger log = LoggerFactory.getLogger(BillingController.class);
